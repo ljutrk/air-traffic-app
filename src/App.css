@@ -1,0 +1,23 @@
+.container {
+    padding: 0 10%;
+}
+
+.navDiv {
+    display: grid;
+    grid-template-columns: auto auto;
+    background-color: #bbf359;
+}
+
+.headerLogo {
+    width: 120px;
+    padding: 0 15px;
+    justify-self: start;
+}
+
+.headerName {
+    font-size: 22px;
+    font-weight: bold;
+    padding-right: 20px;
+    align-self: center;    
+    justify-self: end;
+}
