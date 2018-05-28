@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from 'react';
 import './App.css';
 import Header from './partials/Header';
-import Main from './Main';
+import Main from './components/Main';
 
 class App extends Component {
   render() {
