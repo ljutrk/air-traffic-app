@@ -8,6 +8,7 @@ class Flight {
         this.flightOrigin = flight.From || "unknown";
         this.flightDestination = flight.To || "unknown";
         this.logo = flight.Op;
+        this.icao = flight.Icao;
     }
 }
 

@@ -7,22 +7,20 @@ class Home extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            flights:[],
+            flights: [],
             isLoading: true
         }
     }
 
     componentWillMount() {
         navigator.geolocation.getCurrentPosition((position) => {
-            console.log(position);
-            
+            flightService.fetchFlights(position.coords.latitude, position.coords.longitude)
+                .then(flights => {
+                    flights.sort(altitudeFilter)
+                    console.log(flights);
+                    this.setState({ flights, isLoading: false });
+                })
         });
-        flightService.fetchFlights(40, 20)
-            .then(flights => {
-                flights.sort(altitudeFilter)
-                console.log(flights);
-                this.setState({flights, isLoading: false});
-            })
     }
 
 
@@ -34,6 +32,12 @@ class Home extends Component {
 
         return (
             <div className="homeDiv">
+                <ul className="flightRow flightRowHeader ">
+                    <li>Flight Bearing</li>
+                    <li>Flight Altitude</li>
+                    <li>Flight Code Number</li>
+                    {/* <li>Flight Details</li> */}
+                </ul>
                 {this.state.flights.map(flight => <FlightRow flight={flight} key={flight.id} />)}
             </div>
         );

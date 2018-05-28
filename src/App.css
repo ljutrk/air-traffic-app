@@ -22,16 +22,22 @@
     justify-self: end;
 }
 
-.homeDiv:nth-child(odd){
-    background-color: green;
+.homeDiv ul:nth-child(even){
+    background-color: rgb(228, 228, 228);
 }
 
-.flightRow {
-    
+.flightRowHeader li {
+    font-weight: bold;
 }
 
 .flightRow li {
     display: inline-block;
     list-style: none;
     padding: 20px;
+    width: 250px;
+    text-align: center;
+}
+
+.flightDetailsUL li {
+    list-style: none;
 }
