@@ -21,3 +21,17 @@
     align-self: center;    
     justify-self: end;
 }
+
+.homeDiv:nth-child(odd){
+    background-color: green;
+}
+
+.flightRow {
+    
+}
+
+.flightRow li {
+    display: inline-block;
+    list-style: none;
+    padding: 20px;
+}
