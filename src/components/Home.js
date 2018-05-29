@@ -9,6 +9,8 @@ class Home extends Component {
         this.state = {
             flights: [],
             isLoading: true
+            // latitude: null,
+            // longitude: null
         }
     }
 
@@ -18,17 +20,35 @@ class Home extends Component {
                 .then(flights => {
                     flights.sort(altitudeFilter)
                     console.log(flights);
-                    this.setState({ flights, isLoading: false });
+                    this.setState({
+                        flights,
+                        isLoading: false
+                        // latitude: position.coords.latitude,
+                        // longitude: position.coords.longitude
+                    });
+                    setInterval(function (lat, lng) {
+                        flightService.fetchFlights(lat, lng)
+                            .then(flights => {
+                                flights.sort(altitudeFilter)
+                                refreshState(flights)
+                            })
+                    }, 3000, position.coords.latitude, position.coords.longitude);
+                    const refreshState = (flights) => {
+                        this.setState({
+                            flights
+                        });
+                    }
                 })
         });
-    }
 
+    }
 
     render() {
 
         if (this.state.isLoading) {
             return <h1>Loading...</h1>
         }
+        console.log(this.state);
 
         return (
             <div className="homeDiv">

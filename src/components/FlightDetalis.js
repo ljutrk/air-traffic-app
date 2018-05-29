@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import { flightService } from '../services/FlightService';
 import { logoService } from '../services/LogoService';
 
@@ -50,6 +51,11 @@ class FlightDetails extends Component {
         }
         return (
             <div>
+                <ul className="breadcrumbsUL">
+                    <li><Link to="/">Flights list</Link></li>
+                    <li>></li>
+                    <li>{this.state.flight.icao}</li>
+                </ul>
                 <h1>Flight ICAO : {this.state.flight.icao}</h1>
                 <ul className="flightDetailsUL">
                     <li>Airplane Manufacturer and Model : {this.state.flight.airplaneModel} </li>

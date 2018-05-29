@@ -41,3 +41,10 @@
 .flightDetailsUL li {
     list-style: none;
 }
+
+.breadcrumbsUL li {
+    list-style: none;
+    display: inline-block;
+    padding: 5px;
+    font-size: 20px;
+}
