@@ -1,5 +1,5 @@
 const URL = {
-    base: "http://public-api.adsbexchange.com/VirtualRadar/AircraftList.json",
+    baseFlights: "http://public-api.adsbexchange.com/VirtualRadar/AircraftList.json",
     baseLogo: "https://autocomplete.clearbit.com/v1/companies/suggest?query="
 }
 

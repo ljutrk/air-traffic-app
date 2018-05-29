@@ -1,13 +1,17 @@
-import { URL } from "../shared/constants";
+import { myFetchGetLogo } from './apiService';
+import Logo from '../entities/Logo';
 
 class LogoService {
 
     fetchLogo = (q) => {
-        let url = URL.baseLogo + q;
-        return fetch (url)
-            .then(response => response.json())
+        let urlEnd = q;
+        return myFetchGetLogo(urlEnd)
+            .then(response => {
+                return response.map(logo => {
+                    return new Logo(logo)
+                })
+            })
     }
-
 }
 
 export const logoService = new LogoService()

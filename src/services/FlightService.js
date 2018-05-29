@@ -1,9 +1,10 @@
 import Flight from '../entities/Flight';
-import { myFetchGet } from './apiService';
+import { myFetchGetFlights } from './apiService';
 
 class FlightService {
     fetchFlights = (lat, lng) => {
-        return myFetchGet(lat, lng)
+        let urlEnd = `?lat=${lat}&lng=${lng}&fDstL=0&fDstU=180`;
+        return myFetchGetFlights(urlEnd)
             .then(response => {
                 return response.acList.map(flight => {
                     return new Flight(flight)
@@ -12,9 +13,9 @@ class FlightService {
     }
 
     fetchSingleFlight = (icao) => {
-        return fetch(`http://public-api.adsbexchange.com/VirtualRadar/AircraftList.json?fIcoQ=${icao}`)
-        .then(response => response.json())
-        .then(flight => new Flight(flight.acList[0]))
+        let urlEnd = `?fIcoQ=${icao}`;
+        return myFetchGetFlights(urlEnd)
+            .then(flight => new Flight(flight.acList[0]))
     }
 
 }

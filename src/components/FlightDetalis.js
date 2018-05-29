@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import Loader from '../partials/Loader';
 import { flightService } from '../services/FlightService';
 import { logoService } from '../services/LogoService';
-import Loader from '../partials/Loader';
 
 class FlightDetails extends Component {
     constructor(props) {
@@ -18,36 +18,41 @@ class FlightDetails extends Component {
     componentDidMount() {
         flightService.fetchSingleFlight(this.props.match.params.id)
             .then(flight => {
-                logoService.fetchLogo(flight.logo.split(" ").join("%20"))
-                    .then(response => {
-                        if (response.length === 0) {
-                            logoService.fetchLogo(flight.logo.split(" ")[0])
-                                .then(response => {
-                                    this.setState({
-                                        logoURL: response[0].logo,
-                                        isLogoLoaded: true
-                                    })
-                                })
-                        } else {
-                            this.setState({
-                                logoURL: response[0].logo,
-                                isLogoLoaded: true
-                            })
-                        }
-                    })
+                this.logoFetch(flight)
                 this.setState({
                     flight,
                     isFlightLoaded: true
-                })
-            })
+                });
+            });
+    }
+
+    logoFetch = (flight) => {
+        logoService.fetchLogo(flight.logo.split(" ").join("%20"))
+            .then(response => {
+                response.length === 0 ? this.secondLogoFetch(flight) : this.setState({
+                    logoURL: response[0].logo,
+                    isLogoLoaded: true
+                });
+
+            });
+    }
+
+    secondLogoFetch = (flight) => {
+        logoService.fetchLogo(flight.logo.split(" ")[0])
+            .then(response => {
+                this.setState({
+                    logoURL: response[0].logo,
+                    isLogoLoaded: true
+                });
+            });
     }
 
     render() {
-        console.log(this.state.logoURL);
 
         if (!this.state.isFlightLoaded && !this.state.isLogoLoaded) {
             return <Loader />
         }
+
         return (
             <div>
                 <ul className="breadcrumbsUL">

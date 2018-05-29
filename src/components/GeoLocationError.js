@@ -1,9 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-const GeoLocationError = (props) => {
-    console.log(props);
-    
+const GeoLocationError = () => {
     return (
         <div>
             <h1>{localStorage.getItem("error")} You need to manually allow access, then click button!</h1>

@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
+import Loader from '../partials/Loader';
 import { flightService } from '../services/FlightService';
 import FlightRow from './FlightRow';
 import { altitudeFilter } from '../shared/utils';
-import Loader from '../partials/Loader';
 
 class Home extends Component {
     constructor(props) {
@@ -15,36 +15,36 @@ class Home extends Component {
     }
 
     componentWillMount() {
-        navigator.geolocation.getCurrentPosition(this.locationTrue, this.locationFalse);
+        navigator.geolocation.getCurrentPosition(this.locationGranted, this.locationError);
 
     }
 
-    bla = (lat, lng) => {
+    callFetchFlight = (lat, lng) => {
         return flightService.fetchFlights(lat, lng)
             .then(flights => {
                 flights.sort(altitudeFilter)
-                this.setState({ flights })
-            })
+                this.setState({ flights });
+            });
     }
 
-    locationTrue = (position) => {
+    locationGranted = (position) => {
         const latitude = position.coords.latitude;
         const longitude = position.coords.longitude;
 
-        this.bla(latitude, longitude)
+        this.callFetchFlight(latitude, longitude)
             .then(() => {
                 this.setState({ isLoading: false });
 
                 setInterval(
-                    (lat, lng) => this.bla(lat, lng),
+                    (lat, lng) => this.callFetchFlight(lat, lng),
                     3000,
                     latitude,
                     longitude
                 );
-            })
+            });
     }
 
-    locationFalse = (error) => {
+    locationError = (error) => {
         switch (error.code) {
             case error.PERMISSION_DENIED:
                 localStorage.setItem("error", "User denied the request for Geolocation.")
@@ -68,9 +68,6 @@ class Home extends Component {
         if (this.state.isLoading) {
             return <Loader />
         }
-        console.log(this.state);
-        console.log(this.props);
-
 
         return (
             <div className="homeDiv">
@@ -78,7 +75,6 @@ class Home extends Component {
                     <li>Flight Bearing</li>
                     <li>Flight Altitude</li>
                     <li>Flight Code Number</li>
-                    {/* <li>Flight Details</li> */}
                 </ul>
                 {this.state.flights.map(flight => <FlightRow flight={flight} key={flight.id} />)}
             </div>
