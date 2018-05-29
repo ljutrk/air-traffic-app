@@ -2,6 +2,7 @@ import React, { Component, Fragment } from 'react';
 import './App.css';
 import Header from './partials/Header';
 import Main from './components/Main';
+import Footer from './partials/Footer';
 
 class App extends Component {
   render() {
@@ -9,6 +10,7 @@ class App extends Component {
       <Fragment>
         <Header />
         <Main />
+        <Footer/>
       </Fragment>
     );
   }

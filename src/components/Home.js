@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { withRouter } from 'react-router-dom';
 import Loader from '../partials/Loader';
 import { flightService } from '../services/FlightService';
 import FlightRow from './FlightRow';
@@ -75,6 +74,7 @@ class Home extends Component {
                     <li>Flight Bearing</li>
                     <li>Flight Altitude</li>
                     <li>Flight Code Number</li>
+                    <li>Flight Info</li>
                 </ul>
                 {this.state.flights.map(flight => <FlightRow flight={flight} key={flight.id} />)}
             </div>

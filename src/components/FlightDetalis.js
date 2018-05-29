@@ -54,18 +54,19 @@ class FlightDetails extends Component {
         }
 
         return (
-            <div>
-                <ul className="breadcrumbsUL">
+            <div className="flightDetailsDiv">
+                {/* <ul className="breadcrumbsUL">
                     <li><Link to="/">Flights list</Link></li>
                     <li>></li>
                     <li>{this.state.flight.icao}</li>
-                </ul>
-                <h1>Flight ICAO : {this.state.flight.icao}</h1>
+                </ul> */}
+                <Link to="/"><p>Back to Flights</p></Link>
+                <h2><span>Flight Code Number</span> <br /> {this.state.flight.icao}</h2>
                 <ul className="flightDetailsUL">
-                    <li>Airplane Manufacturer and Model : {this.state.flight.airplaneModel} </li>
-                    <li>Departure Airport : {this.state.flight.flightOrigin}</li>
-                    <li>Destination Airport : {this.state.flight.flightDestination}</li>
                     <li><img src={this.state.logoURL} alt="" /></li>
+                    <li><span>Airplane Manufacturer and Model</span> <br /> {this.state.flight.airplaneModel} </li>
+                    <li><span>Departure Airport</span> <br /> {this.state.flight.flightOrigin}</li>
+                    <li><span>Destination Airport</span> <br /> {this.state.flight.flightDestination}</li>
                 </ul>
             </div>
         );

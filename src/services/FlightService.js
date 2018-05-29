@@ -3,9 +3,11 @@ import { myFetchGetFlights } from './apiService';
 
 class FlightService {
     fetchFlights = (lat, lng) => {
-        let urlEnd = `?lat=${lat}&lng=${lng}&fDstL=0&fDstU=180`;
+        let urlEnd = `?lat=${lat}&lng=${lng}&fDstL=0&fDstU=100`;
         return myFetchGetFlights(urlEnd)
             .then(response => {
+                console.log(response);
+                
                 return response.acList.map(flight => {
                     return new Flight(flight)
                 })
