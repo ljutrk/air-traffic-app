@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { flightService } from '../services/FlightService';
 import { logoService } from '../services/LogoService';
+import Loader from '../partials/Loader';
 
 class FlightDetails extends Component {
     constructor(props) {
@@ -38,16 +39,14 @@ class FlightDetails extends Component {
                     flight,
                     isFlightLoaded: true
                 })
-                console.log(flight);
             })
-
     }
 
     render() {
         console.log(this.state.logoURL);
 
         if (!this.state.isFlightLoaded && !this.state.isLogoLoaded) {
-            return <h1>Loading...</h1>
+            return <Loader />
         }
         return (
             <div>

@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
+import { withRouter } from 'react-router-dom';
 import { flightService } from '../services/FlightService';
 import FlightRow from './FlightRow';
 import { altitudeFilter } from '../shared/utils';
+import Loader from '../partials/Loader';
 
 class Home extends Component {
     constructor(props) {
@@ -9,46 +11,66 @@ class Home extends Component {
         this.state = {
             flights: [],
             isLoading: true
-            // latitude: null,
-            // longitude: null
         }
     }
 
     componentWillMount() {
-        navigator.geolocation.getCurrentPosition((position) => {
-            flightService.fetchFlights(position.coords.latitude, position.coords.longitude)
-                .then(flights => {
-                    flights.sort(altitudeFilter)
-                    console.log(flights);
-                    this.setState({
-                        flights,
-                        isLoading: false
-                        // latitude: position.coords.latitude,
-                        // longitude: position.coords.longitude
-                    });
-                    setInterval(function (lat, lng) {
-                        flightService.fetchFlights(lat, lng)
-                            .then(flights => {
-                                flights.sort(altitudeFilter)
-                                refreshState(flights)
-                            })
-                    }, 3000, position.coords.latitude, position.coords.longitude);
-                    const refreshState = (flights) => {
-                        this.setState({
-                            flights
-                        });
-                    }
-                })
-        });
+        navigator.geolocation.getCurrentPosition(this.locationTrue, this.locationFalse);
 
+    }
+
+    bla = (lat, lng) => {
+        return flightService.fetchFlights(lat, lng)
+            .then(flights => {
+                flights.sort(altitudeFilter)
+                this.setState({ flights })
+            })
+    }
+
+    locationTrue = (position) => {
+        const latitude = position.coords.latitude;
+        const longitude = position.coords.longitude;
+
+        this.bla(latitude, longitude)
+            .then(() => {
+                this.setState({ isLoading: false });
+
+                setInterval(
+                    (lat, lng) => this.bla(lat, lng),
+                    3000,
+                    latitude,
+                    longitude
+                );
+            })
+    }
+
+    locationFalse = (error) => {
+        switch (error.code) {
+            case error.PERMISSION_DENIED:
+                localStorage.setItem("error", "User denied the request for Geolocation.")
+                break;
+            case error.POSITION_UNAVAILABLE:
+                localStorage.setItem("error", "Location information is unavailable.")
+                break;
+            case error.TIMEOUT:
+                localStorage.setItem("error", "The request to get user location timed out.")
+                break;
+            case error.UNKNOWN_ERROR:
+                localStorage.setItem("error", "An unknown error occurred.")
+                break;
+        }
+
+        this.props.history.push("/geoLocationError");
     }
 
     render() {
 
         if (this.state.isLoading) {
-            return <h1>Loading...</h1>
+            return <Loader />
         }
         console.log(this.state);
+        console.log(this.props);
+
 
         return (
             <div className="homeDiv">

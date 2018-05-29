@@ -4,24 +4,13 @@ import { authenticate } from '../../shared/utils';
 
 const PrivateRoute = ({ component: Component, ...rest }) => (
 
-  < Route
-    {...rest}
-    render={
-      props =>{
-        navigator.geolocation.getCurrentPosition((position) => {
-          
-      })
-        return authenticate() ? (
-          <Component {...props} />
-        ) : (
-            <Redirect
-              to={{
-                pathname: "/login",
-                state: { from: props.location }
-              }}
-            />
-          )
-    }}
+  <Route {...rest} render={ props => {
+        return authenticate() ? (<Component {...props} />) : 
+        (<Redirect to={{
+          pathname: "/login",
+          state: { from: props.location }
+              }}/>)
+      }}
   />
 );
 
