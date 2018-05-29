@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import Loader from '../partials/Loader';
-import { flightService } from '../services/FlightService';
-import { logoService } from '../services/LogoService';
+import { flightService } from '../../../services/FlightService';
+import { logoService } from '../../../services/LogoService';
+import { URL } from '../../../shared/constants';
 
 class FlightDetails extends Component {
     constructor(props) {
@@ -18,7 +19,7 @@ class FlightDetails extends Component {
     componentDidMount() {
         flightService.fetchSingleFlight(this.props.match.params.id)
             .then(flight => {
-                this.logoFetch(flight)
+                this.logoFetch(flight);
                 this.setState({
                     flight,
                     isFlightLoaded: true
@@ -33,15 +34,15 @@ class FlightDetails extends Component {
                     logoURL: response[0].logo,
                     isLogoLoaded: true
                 });
-
             });
     }
 
     secondLogoFetch = (flight) => {
         logoService.fetchLogo(flight.logo.split(" ")[0])
             .then(response => {
+                let logoURL = response[0].logo || URL.logoPlaceholder;
                 this.setState({
-                    logoURL: response[0].logo,
+                    logoURL,
                     isLogoLoaded: true
                 });
             });
@@ -55,13 +56,8 @@ class FlightDetails extends Component {
 
         return (
             <div className="flightDetailsDiv">
-                {/* <ul className="breadcrumbsUL">
-                    <li><Link to="/">Flights list</Link></li>
-                    <li>></li>
-                    <li>{this.state.flight.icao}</li>
-                </ul> */}
                 <Link to="/"><p>Back to Flights</p></Link>
-                <h2><span>Flight Code Number</span> <br /> {this.state.flight.icao}</h2>
+                <h2><span>Flight Code Number</span> <br /> {this.state.flight.callname}</h2>
                 <ul className="flightDetailsUL">
                     <li><img src={this.state.logoURL} alt="" /></li>
                     <li><span>Airplane Manufacturer and Model</span> <br /> {this.state.flight.airplaneModel} </li>

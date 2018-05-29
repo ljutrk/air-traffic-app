@@ -1,5 +1,5 @@
-import { myFetchGetLogo } from './apiService';
 import Logo from '../entities/Logo';
+import { myFetchGetLogo } from './apiService';
 
 class LogoService {
 
@@ -8,10 +8,10 @@ class LogoService {
         return myFetchGetLogo(urlEnd)
             .then(response => {
                 return response.map(logo => {
-                    return new Logo(logo)
-                })
-            })
+                    return new Logo(logo);
+                });
+            });
     }
 }
 
-export const logoService = new LogoService()
+export const logoService = new LogoService();

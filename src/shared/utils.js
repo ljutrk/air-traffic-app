@@ -11,4 +11,4 @@ const altitudeFilter = (a, b) => {
     return comparison;
 }
 
-export { altitudeFilter }
+export { altitudeFilter };

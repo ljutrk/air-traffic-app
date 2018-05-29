@@ -13,7 +13,6 @@
 .headerLogo {
     height: 70px;
     padding: 0 15px;
-    /* justify-self: start; */
 }
 
 .headerName {
@@ -22,13 +21,7 @@
     font-weight: bold;
     padding-right: 20px;
     align-self: center;
-    /* align-self: center;
-    justify-self: end; */
 }
-
-/* .homeDiv ul:nth-child(even){
-    background-color: rgb(228, 228, 228);
-} */
 
 .flightRow li {
     display: inline-block;
@@ -74,24 +67,6 @@ h2 {
     margin: 10px 0;
 }
 
-/* .breadcrumbsUL li {
-    list-style: none;
-    display: inline-block;
-    padding: 5px;
-    font-size: 20px;
-}
-
-.breadcrumbsUL li a {
-    text-decoration: none;
-    color: white;
-    transition: color .3s ease;
-}
-
-.breadcrumbsUL li a:hover {
-    color: #ffb515 */
-
-/* } */
-
 .flightDetailsDiv {
     background-color: #003264;
     color: white;
@@ -102,17 +77,15 @@ h2 {
     color: white;
     transition: color .3s ease;
 }
+
 .flightDetailsDiv a p {
     display: inline-block;
     margin-left: 30px;
     text-decoration: underline;
-    /* width: 30%;     */
 }
 
 .flightDetailsDiv a:hover {
     color: #ffb515;
-
-    /* margin-left: 20px; */
 }
 
 .flightDetailsUL li span {
@@ -134,23 +107,40 @@ h2 span {
     text-align: center;
     justify-content: center;
     margin-top: 50px;
-    
 }
 
 .footerDiv p {
     align-self: center;
+    font-size: 20px;
+    font-weight: bold;
 }
+
+.locationErrorBtn {
+    display: block;
+    background-color: #003264;
+    border: 3px solid #ffb515;
+    margin: 20px auto;
+    padding: 10px;
+    font-size: 20px;
+    color: #ffb515;
+}
+
+.locationErrorDiv a {
+    text-decoration: none;
+}
+
+.wrap {
+    min-height: calc(100vh - 70px);
+  }
 
 @media (max-width: 768px) {
     .container {
         padding: 5px;
     }
-
     .navDiv {
         margin-bottom: 0;
     }
-
     .footerDiv {
-        margin-top:0;
+        margin-top: 0;
     }
 }

@@ -1,8 +1,8 @@
 import React from 'react';
 import { Route } from 'react-router-dom';
-import Home from './Home';
-import FlightDetails from './FlightDetalis';
-import GeoLocationError from './GeoLocationError';
+import Home from './components/homepage/Home';
+import FlightDetails from './components/flightDetails/FlightDetalis';
+import GeoLocationError from './components/geoLocationError/GeoLocationError';
 
 const Main = () => {
     return (

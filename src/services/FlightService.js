@@ -6,18 +6,16 @@ class FlightService {
         let urlEnd = `?lat=${lat}&lng=${lng}&fDstL=0&fDstU=100`;
         return myFetchGetFlights(urlEnd)
             .then(response => {
-                console.log(response);
-                
                 return response.acList.map(flight => {
-                    return new Flight(flight)
-                })
-            })
+                    return new Flight(flight);
+                });
+            });
     }
 
     fetchSingleFlight = (icao) => {
         let urlEnd = `?fIcoQ=${icao}`;
         return myFetchGetFlights(urlEnd)
-            .then(flight => new Flight(flight.acList[0]))
+            .then(flight => new Flight(flight.acList[0]));
     }
 
 }

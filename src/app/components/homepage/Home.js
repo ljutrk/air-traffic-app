@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import Loader from '../partials/Loader';
-import { flightService } from '../services/FlightService';
 import FlightRow from './FlightRow';
-import { altitudeFilter } from '../shared/utils';
+import { flightService } from '../../../services/FlightService';
+import { altitudeFilter } from '../../../shared/utils';
 
 class Home extends Component {
     constructor(props) {
@@ -13,7 +13,7 @@ class Home extends Component {
         }
     }
 
-    componentWillMount() {
+    componentDidMount() {
         navigator.geolocation.getCurrentPosition(this.locationGranted, this.locationError);
 
     }
@@ -21,7 +21,7 @@ class Home extends Component {
     callFetchFlight = (lat, lng) => {
         return flightService.fetchFlights(lat, lng)
             .then(flights => {
-                flights.sort(altitudeFilter)
+                flights.sort(altitudeFilter);
                 this.setState({ flights });
             });
     }
@@ -34,7 +34,7 @@ class Home extends Component {
             .then(() => {
                 this.setState({ isLoading: false });
 
-                setInterval(
+                this.dataUpdate = setInterval(
                     (lat, lng) => this.callFetchFlight(lat, lng),
                     3000,
                     latitude,
@@ -46,20 +46,27 @@ class Home extends Component {
     locationError = (error) => {
         switch (error.code) {
             case error.PERMISSION_DENIED:
-                localStorage.setItem("error", "User denied the request for Geolocation.")
+                localStorage.setItem("error", "User denied the request for Geolocation.");
                 break;
             case error.POSITION_UNAVAILABLE:
-                localStorage.setItem("error", "Location information is unavailable.")
+                localStorage.setItem("error", "Location information is unavailable.");
                 break;
             case error.TIMEOUT:
-                localStorage.setItem("error", "The request to get user location timed out.")
+                localStorage.setItem("error", "The request to get user location timed out.");
                 break;
             case error.UNKNOWN_ERROR:
-                localStorage.setItem("error", "An unknown error occurred.")
+                localStorage.setItem("error", "An unknown error occurred.");
+                break;
+            default:
+                localStorage.setItem("error", "Something went wrong... not really sure what? ");
                 break;
         }
 
         this.props.history.push("/geoLocationError");
+    }
+
+    componentWillUnmount() {
+        clearInterval(this.dataUpdate);
     }
 
     render() {

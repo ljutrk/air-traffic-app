@@ -1,6 +1,6 @@
 class Flight {
     constructor(flight) {
-        this.id = flight.Id
+        this.id = flight.Id;
         this.bearing = parseInt(flight.Brng, 10) > 180 ? "left" : "right";
         this.altitude = flight.Alt;
         this.airplaneModel = flight.Mdl;
@@ -8,6 +8,7 @@ class Flight {
         this.flightDestination = flight.To || "unknown";
         this.logo = flight.Op;
         this.icao = flight.Icao;
+        this.callname = flight.Call || "unknown";
     }
 }
 
