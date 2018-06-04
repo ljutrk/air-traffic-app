@@ -2,7 +2,7 @@ import Flight from '../entities/Flight';
 import { myFetchGetFlights } from './apiService';
 
 class FlightService {
-    fetchFlights = (lat, lng) => {
+    fetchFlights(lat, lng) {
         let urlEnd = `?lat=${lat}&lng=${lng}&fDstL=0&fDstU=100`;
         return myFetchGetFlights(urlEnd)
             .then(response => {
@@ -12,7 +12,7 @@ class FlightService {
             });
     }
 
-    fetchSingleFlight = (icao) => {
+    fetchSingleFlight(icao) {
         let urlEnd = `?fIcoQ=${icao}`;
         return myFetchGetFlights(urlEnd)
             .then(flight => new Flight(flight.acList[0]));

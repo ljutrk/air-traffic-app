@@ -3,7 +3,7 @@ import { myFetchGetLogo } from './apiService';
 
 class LogoService {
 
-    fetchLogo = (q) => {
+    fetchLogo(q) {
         let urlEnd = q;
         return myFetchGetLogo(urlEnd)
             .then(response => {

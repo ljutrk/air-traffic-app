@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import Loader from '../partials/Loader';
-import FlightRow from './FlightRow';
+import { Loader } from '../partials/Loader';
+import { FlightRow } from './FlightRow';
 import { flightService } from '../../../services/FlightService';
 import { altitudeFilter } from '../../../shared/utils';
 
@@ -10,15 +10,17 @@ class Home extends Component {
         this.state = {
             flights: [],
             isLoading: true
-        }
+        };
+        this.callFetchFlight = this.callFetchFlight.bind(this);
+        this.locationGranted = this.locationGranted.bind(this);
+        this.locationError = this.locationError.bind(this);
     }
 
     componentDidMount() {
         navigator.geolocation.getCurrentPosition(this.locationGranted, this.locationError);
-
     }
 
-    callFetchFlight = (lat, lng) => {
+    callFetchFlight(lat, lng) {
         return flightService.fetchFlights(lat, lng)
             .then(flights => {
                 flights.sort(altitudeFilter);
@@ -26,7 +28,7 @@ class Home extends Component {
             });
     }
 
-    locationGranted = (position) => {
+    locationGranted(position) {
         const latitude = position.coords.latitude;
         const longitude = position.coords.longitude;
 
@@ -43,7 +45,7 @@ class Home extends Component {
             });
     }
 
-    locationError = (error) => {
+    locationError(error) {
         switch (error.code) {
             case error.PERMISSION_DENIED:
                 localStorage.setItem("error", "User denied the request for Geolocation.");
@@ -70,9 +72,10 @@ class Home extends Component {
     }
 
     render() {
+        const {isLoading, flights} = this.state;
 
-        if (this.state.isLoading) {
-            return <Loader />
+        if (isLoading) {
+            return <Loader />;
         }
 
         return (
@@ -83,10 +86,10 @@ class Home extends Component {
                     <li>Flight Code Number</li>
                     <li>Flight Info</li>
                 </ul>
-                {this.state.flights.map(flight => <FlightRow flight={flight} key={flight.id} />)}
+                {flights.map(flight => <FlightRow flight={flight} key={flight.id} />)}
             </div>
         );
     }
 }
 
-export default Home;
+export { Home };

@@ -11,6 +11,6 @@ const FlightRow = ({ flight }) => {
             <li><Link className="flightDetailsLink" to={`/flightDetails/${flight.icao}`}>Details</Link></li>
         </ul>
     );
-}
+};
 
-export default FlightRow;
+export { FlightRow };
